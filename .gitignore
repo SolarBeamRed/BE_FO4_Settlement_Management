@@ -1,0 +1,10 @@
+backend/data/*
+!backend/data/.gitkeep
+
+.ipynb_checkpoints/
+
+__pycache__/
+*.pyc
+*.pyo
+
+.idea/
