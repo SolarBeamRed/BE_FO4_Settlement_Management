@@ -1,5 +1,8 @@
 from pathlib import Path
+from typing import Annotated
 from sqlmodel import SQLModel, Session, create_engine
+
+from fastapi import Depends
 
 DB_DIR = Path(__file__).resolve().parent.parent.parent / 'data' / 'database.db'
 
@@ -14,3 +17,5 @@ def create_db_and_tables():
 def get_session():
     with Session(engine) as session:
         yield session
+
+SessionDependence = Annotated[Session, Depends(get_session)]
