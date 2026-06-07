@@ -1,16 +1,20 @@
-from lzma import PRESET_DEFAULT
+from datetime import timedelta
+
 from sqlmodel import Session, select
 from fastapi import APIRouter, HTTPException
 
+from app.core.config import settings
 from app.core.database import SessionDependence
-from app.core.security import get_password_hash, verify_password
+from app.core.security import authenticate_user, create_access_token, get_password_hash
 from app.schemas.user import UserCreate, UserLogin, UserResponse
+from app.schemas.token import Token
 from app.models.user import User
 
 router = APIRouter(prefix='/auth', tags=['auth'])
 
 
 # _______________________      HELPER FUNCTIONS     __________________________
+
 
 def check_existing_user(username:str, session: Session):
     statement = select(User).where(
@@ -21,8 +25,8 @@ def check_existing_user(username:str, session: Session):
         raise HTTPException(status_code=400, detail='Username already exists')
 
 
-
 # ____________________________     ROUTES    __________________________________
+
 
 @router.post('/register', response_model=UserResponse)
 async def register_user(user_creds: UserCreate, session: SessionDependence):
@@ -36,3 +40,27 @@ async def register_user(user_creds: UserCreate, session: SessionDependence):
     session.refresh(new_user)
 
     return new_user
+
+
+@router.post('/login', response_model=Token)
+async def login(user_creds: UserLogin, session: SessionDependence):
+    user = authenticate_user(username=user_creds.username,
+                             password=user_creds.password,
+                             session=session)
+    if user is None:
+        raise HTTPException(
+            status_code=401,
+            detail='Incorrect username or password',
+            headers={'WWW-Authenticate': 'Bearer'}
+        )
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRY_MINUTES)
+    access_token = create_access_token(user=user, expires_delta=access_token_expires)
+    return Token(
+        access_token=access_token,
+        token_type='bearer'
+    )
+
+
+# ____________________________     ROUTES    __________________________________
+
+

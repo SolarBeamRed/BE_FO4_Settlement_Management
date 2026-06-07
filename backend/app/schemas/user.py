@@ -1,6 +1,5 @@
 from datetime import datetime
 from pydantic import BaseModel
-from pydantic_core.core_schema import NoInfoValidatorFunctionSchema
 
 # User class for create/login
 class UserCreate(BaseModel):
