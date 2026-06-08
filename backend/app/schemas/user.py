@@ -27,3 +27,13 @@ class UserProfileResponse(BaseModel):
     bio: str | None = None
     favorite_settlement: str | None = None
     favorite_faction: str | None = None
+
+# Class for user profile update
+class UserUpdate(BaseModel):
+    username: str | None = None
+    
+    display_name: str | None = None 
+    bio: str | None = None
+    favorite_settlement: str | None = None
+    favorite_faction: str | None = None
+

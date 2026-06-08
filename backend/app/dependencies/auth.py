@@ -62,7 +62,7 @@ CurrentUserDependency = Annotated[User, Depends(get_current_user)]
 # _______________________________________________________________________________________ #
 
 
-def get_current_active_user(user: CurrentUserDependency) -> User | None:
+def get_current_active_user(user: CurrentUserDependency) -> User:
     if not user.is_active:
         raise HTTPException(status_code=400, detail='Not an active user')
     return user

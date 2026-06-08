@@ -17,10 +17,10 @@ router = APIRouter(prefix='/auth', tags=['auth'])
 
 
 def check_existing_user(username:str, session: Session):
-    statement = select(User).where(
+    query = select(User).where(
         User.username == username
     )
-    existing_user = session.exec(statement).first()
+    existing_user = session.exec(query).first()
     if existing_user:
         raise HTTPException(status_code=400, detail='Username already exists')
 
