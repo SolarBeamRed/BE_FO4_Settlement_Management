@@ -1,7 +1,9 @@
 from datetime import datetime
 
-from sqlalchemy import Column, String
-from sqlmodel import Field, SQLModel
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
+
+from backend.app.core.database import Base
 
 # User table in DB
 # _____________      schema followed:      _____________
@@ -10,7 +12,6 @@ from sqlmodel import Field, SQLModel
 # user_id                  |      int     PRIMARY KEY
 # username                 |      text    UNIQUE 
 # hashed_password          |      text
-# profile_picture_url      |      text
 # is_active                |      bool
 # created_at               |      datetime
 # updated_at               |      datetime
@@ -23,19 +24,20 @@ from sqlmodel import Field, SQLModel
 #
 
 
-class User(SQLModel, table=True):
+class User(Base):
+    __tablename__ = 'users'
 
 # Core
-    user_id: int | None = Field(default=None, primary_key=True)
-    username: str = Field(sa_column=Column(String, unique=True, index=True))
-    hashed_password: str
-    is_active: bool = True
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime | None = None
+    user_id: Mapped[str] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(unique=True, index=True)
+    hashed_password: Mapped[str]
+    is_active: Mapped[bool] = mapped_column(default=True)
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now)
+    updated_at: Mapped[datetime | None] = mapped_column(default=None)
 
 # Extra personalized feel columns
-    display_name: str | None = Field(default=None, max_length=20)
-    profile_picture_url: str | None = None
-    bio: str | None = Field(default=None, max_length=50)
-    favorite_settlement: str | None = Field(default=None, max_length=50)
-    favorite_faction: str | None = Field(default=None, max_length=50)
+    display_name: Mapped[str | None] = mapped_column(String(20), default=None)
+    profile_picture_url: Mapped[str | None] = mapped_column(String(40), default=None)
+    bio: Mapped[str | None] = mapped_column(String(50), default=None)
+    favorite_settlement: Mapped[str | None] = mapped_column(String(30), default=None)
+    favorite_faction: Mapped[str | None] = mapped_column(String(30), default=None)
