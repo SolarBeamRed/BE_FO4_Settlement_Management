@@ -1,9 +1,10 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
 
 from app.core.database import create_db_and_tables
 from app.routes import auth
-from app.models.user import User
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

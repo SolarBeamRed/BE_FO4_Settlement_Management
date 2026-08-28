@@ -1,14 +1,14 @@
 from datetime import timedelta
 
-from sqlmodel import Session, select
 from fastapi import APIRouter, HTTPException
+from sqlmodel import Session, select
 
 from app.core.config import settings
 from app.core.database import SessionDependence
 from app.core.security import authenticate_user, create_access_token, get_password_hash
-from app.schemas.user import UserCreate, UserLogin, UserResponse
-from app.schemas.token import Token
 from app.models.user import User
+from app.schemas.token import Token
+from app.schemas.user import UserCreate, UserLogin, UserResponse
 
 router = APIRouter(prefix='/auth', tags=['auth'])
 
@@ -61,6 +61,6 @@ async def login(user_creds: UserLogin, session: SessionDependence):
     )
 
 
-# ____________________________     ROUTES    __________________________________
+# ____________________________    /ROUTES    __________________________________
 
 

@@ -1,6 +1,7 @@
-from sqlmodel import SQLModel, Field
-from sqlalchemy import Column, String
 from datetime import datetime
+
+from sqlalchemy import Column, String
+from sqlmodel import Field, SQLModel
 
 # User table in DB
 # _____________      schema followed:      _____________

@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from pwdlib import PasswordHash
 
 import jwt
+from pwdlib import PasswordHash
 
 from app.core.config import settings
 from app.core.database import SessionDependence
 from app.dependencies.auth import get_user_by_username
 from app.models.user import User
-
 
 password_hasher = PasswordHash.recommended()
 

@@ -1,13 +1,11 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Path,  HTTPException
+from fastapi import APIRouter, Body, HTTPException, Path
 
 from app.core.database import SessionDependence
 from app.dependencies.auth import CurrentUserDependency, get_user_by_username
-from app.schemas.user import UserProfileResponse, UserUpdate
-from app.models.user import User
 from app.routes.auth import check_existing_user
-
+from app.schemas.user import UserProfileResponse, UserUpdate
 
 router = APIRouter(
     prefix='/users',

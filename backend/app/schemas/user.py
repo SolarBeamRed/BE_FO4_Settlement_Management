@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from pydantic import BaseModel
+
 
 # User class for create/login
 class UserCreate(BaseModel):
