@@ -1,7 +1,8 @@
 from datetime import timedelta
 
 from fastapi import APIRouter, HTTPException
-from sqlmodel import Session, select
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.database import SessionDependence
