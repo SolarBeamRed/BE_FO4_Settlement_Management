@@ -20,7 +20,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/login')
 
 def get_user_by_username(username: str, session: Session) -> User|None:
     query = select(User).where(User.username == username)
-    user:User|None = session.exec(query).first()
+    user:User|None = session.scalar(query)
     return user
 
 

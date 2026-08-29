@@ -1,18 +1,25 @@
-from pathlib import Path
+import os
 from typing import Annotated
 
+from dotenv import load_dotenv
 from fastapi import Depends
-from sqlalchemy import create_engine
+from sqlalchemy import URL, create_engine
 from sqlalchemy.orm import DeclarativeBase, Session
 
 ###
 
+load_dotenv()
 
-DB_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "database.db"
+database_url = URL.create(
+    'postgresql+psycopg',
+    username='fallout_app',
+    password=os.environ['DB_PASSWORD'],
+    host='localhost',
+    port=5432,
+    database='fallout_settlement_manager'
+)
 
-sqlite_url = f"sqlite:///{DB_DIR}"
-connect_args = {"check_same_thread": False}
-engine = create_engine(url=sqlite_url, connect_args=connect_args)
+engine = create_engine(database_url)
 
 
 

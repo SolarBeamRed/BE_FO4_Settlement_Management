@@ -21,7 +21,7 @@ def check_existing_user(username:str, session: Session):
     query = select(User).where(
         User.username == username
     )
-    existing_user = session.exec(query).first()
+    existing_user = session.scalar(query)
     if existing_user:
         raise HTTPException(status_code=400, detail='Username already exists')
 

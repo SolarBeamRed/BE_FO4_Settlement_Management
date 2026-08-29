@@ -40,13 +40,13 @@ def authenticate_user(username: str, password: str, session: SessionDependence):
 
 
 def create_access_token(user:User, expires_delta: timedelta | None) -> str:
-    payload = {
-        'sub': str(user.user_id)
-    }
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=60)
-    payload.update({'exp': expire})
+    payload = {
+            'sub': str(user.user_id), 
+            'exp': expire
+        }
     encoded_jwt = jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
