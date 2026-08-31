@@ -31,6 +31,7 @@ class Base(DeclarativeBase):
 # __________________     Functions     ____________________
 
 def create_db_and_tables():
+    from app import models  # noqa: F401
     Base.metadata.create_all(engine)
 
 def get_session():

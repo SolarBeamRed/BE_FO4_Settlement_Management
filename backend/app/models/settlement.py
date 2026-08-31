@@ -21,7 +21,7 @@ class SettlementsCraftingStations(Base):
     __tablename__ = 'settlements_crafting_stations'
 
     settlement_id: Mapped[int] = mapped_column(
-        ForeignKey(Settlements.settlement_id),
+        ForeignKey('settlements.settlement_id'),
         primary_key=True)
     weapons_workbench: Mapped[bool] = mapped_column(default=False)
     armor_workbench: Mapped[bool] = mapped_column(default=False)

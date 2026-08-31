@@ -1,0 +1,16 @@
+[project]
+name = "fallout_settlement_manager"
+requires-python = ">=3.13"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "sqlalchemy",
+    "psycopg[binary]",
+    "pydantic",
+    "pyjwt",
+    "pwdlib"
+]
+
+[tool.fastapi]
+entrypoint = "app.main:app"
