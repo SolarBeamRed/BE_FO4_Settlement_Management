@@ -9,14 +9,15 @@ class Settlements(Base):
 
     settlement_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(unique=True)
-    region: Mapped[str]
+    region: Mapped[str | None]
+    addon: Mapped[str]
     description: Mapped[str]
     map_image_url: Mapped[str]
     how_to_obtain: Mapped[str]
     notes: Mapped[str | None]
     ref_id: Mapped[str]
     wiki_url: Mapped[str]
-
+    
 class SettlementsCraftingStations(Base):
     __tablename__ = 'settlements_crafting_stations'
 
