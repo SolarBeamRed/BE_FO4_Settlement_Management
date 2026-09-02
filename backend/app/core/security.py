@@ -2,9 +2,9 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from pwdlib import PasswordHash
+from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.core.database import SessionDependence
 from app.dependencies.auth import get_user_by_username
 from app.models.user import User
 
@@ -25,8 +25,8 @@ def verify_password(plain_password: str, hashed_password: str):
 # ________________________________________________________________________________________
 
 
-def authenticate_user(username: str, password: str, session: SessionDependence):
-    user:User|None = get_user_by_username(username=username, session=session)
+def authenticate_user(username: str, password: str, session: Session):
+    user:User | None = get_user_by_username(username=username, session=session)
     if not user:
         DUMMY_HASH = get_password_hash('asdhndfgiqudaj,#sbwi')
         _ = verify_password(password, DUMMY_HASH)

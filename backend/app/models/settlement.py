@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, Integer
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
 
@@ -12,11 +12,15 @@ class Settlements(Base):
     region: Mapped[str | None]
     addon: Mapped[str]
     description: Mapped[str]
-    map_image_url: Mapped[str]
+    map_image_url: Mapped[str | None]
     how_to_obtain: Mapped[str]
     notes: Mapped[str | None]
     ref_id: Mapped[str]
     wiki_url: Mapped[str]
+
+    crafting_stations: Mapped["SettlementsCraftingStations"] = relationship(
+        "SettlementsCraftingStations", back_populates="settlement"
+    )
     
 class SettlementsCraftingStations(Base):
     __tablename__ = 'settlements_crafting_stations'
@@ -29,3 +33,7 @@ class SettlementsCraftingStations(Base):
     chemistry_station: Mapped[bool] = mapped_column(default=False)
     cooking_station: Mapped[bool] = mapped_column(default=False)
     power_armor_station: Mapped[bool] = mapped_column(default=False)
+
+    settlement: Mapped["Settlements"] = relationship(
+        "Settlements", back_populates="crafting_stations"
+    )

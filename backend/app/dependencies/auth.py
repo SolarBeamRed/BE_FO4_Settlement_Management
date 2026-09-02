@@ -12,23 +12,23 @@ from app.core.database import SessionDependence
 from app.models.user import User
 from app.schemas.token import TokenData
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/token')
 
 
 # _______________________________________________________________________________________ #
 
 
-def get_user_by_username(username: str, session: Session) -> User|None:
+def get_user_by_username(username: str, session: Session) -> User | None:
     query = select(User).where(User.username == username)
-    user:User|None = session.scalar(query)
+    user:User | None = session.scalar(query)
     return user
 
 
 
 
-def get_user_by_id(user_id: int | str, session: Session) -> User|None:
+def get_user_by_id(user_id: int | str, session: Session) -> User | None:
     user_id = int(user_id)
-    user:User|None = session.get(User, user_id) 
+    user:User | None = session.get(User, user_id) 
     return user
 
 

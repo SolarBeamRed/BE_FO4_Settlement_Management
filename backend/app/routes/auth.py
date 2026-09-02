@@ -1,6 +1,8 @@
 from datetime import timedelta
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -61,6 +63,37 @@ async def login(user_creds: UserLogin, session: SessionDependence):
         token_type='bearer'
     )
 
+
+# Login, but with form instead of JSON. Solely for testing with Swagger, actual project will use JSON bodies for login
+@router.post("/token", response_model=Token)
+def token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    session: SessionDependence
+):
+    user = authenticate_user(
+        username=form_data.username,
+        password=form_data.password,
+        session=session
+    )
+
+    if user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    expires = timedelta(
+        minutes=settings.ACCESS_TOKEN_EXPIRY_MINUTES
+    )
+
+    return Token(
+        access_token=create_access_token(
+            user=user,
+            expires_delta=expires
+        ),
+        token_type="bearer"
+    )
 
 # ____________________________    /ROUTES    __________________________________
 
