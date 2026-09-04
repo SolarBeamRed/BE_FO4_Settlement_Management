@@ -12,3 +12,6 @@ __pycache__/
 .idea/
 .vscode/
 .ruff_cache/
+
+postgresql_setup.txt
+docker_steps.txt
