@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 
 from app.schemas.settlement import SettlementsResponse
 
+
 # User settlement unlock schema for POST my-settlements/ 
 class UserSettlementUnlock(BaseModel):
     settlement_id: int 

@@ -6,6 +6,7 @@
 - User profile
 - Update profile
 - Change password
+- Delete user
 <br><br>
 
 ### Settlements
