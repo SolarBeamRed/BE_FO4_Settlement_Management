@@ -2,6 +2,7 @@ from sqlalchemy import ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
+from app.models.user_settlement import UserSettlement
 
 
 class Settlements(Base):
@@ -20,6 +21,11 @@ class Settlements(Base):
 
     crafting_stations: Mapped["SettlementsCraftingStations"] = relationship(
         "SettlementsCraftingStations", back_populates="settlement"
+    )
+
+    user_settlements: Mapped[list["UserSettlement"]] = relationship(
+    "UserSettlement",
+    back_populates="settlement",
     )
     
 class SettlementsCraftingStations(Base):

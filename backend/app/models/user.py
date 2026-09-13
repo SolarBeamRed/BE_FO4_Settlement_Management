@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
+from app.models.user_settlement import UserSettlement
 
 # User table in DB
 # _____________      schema followed:      _____________
@@ -41,3 +42,9 @@ class User(Base):
     bio: Mapped[str | None] = mapped_column(String(50), default=None)
     favorite_settlement: Mapped[str | None] = mapped_column(String(30), default=None)
     favorite_faction: Mapped[str | None] = mapped_column(String(30), default=None)
+
+    user_settlements: Mapped[list['UserSettlement']] = relationship(
+        'UserSettlement',
+        back_populates='user',
+        cascade='all, delete-orphan'
+    )

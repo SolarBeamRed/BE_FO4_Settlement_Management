@@ -54,4 +54,7 @@ async def get_searched_user(
     return target_user
 
 
+@router.delete('/me', status_code=204)
+def delete_user(current_user: CurrentUserDependency, session: SessionDependence):
+    pass
 # _____________________________________________________________________
