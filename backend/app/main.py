@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import create_db_and_tables
-from app.routes import auth, settlements, users
+from app.routes import auth, settlements, users, user_settlement
 
 
 @asynccontextmanager
@@ -25,6 +25,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(settlements.router)
 app.include_router(users.router)
+app.include_router(user_settlement.router)
 
 @app.get('/')
 def print_root():

@@ -2,8 +2,6 @@ from sqlalchemy import ForeignKey, Integer, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
-from app.models.settlement import Settlements
-from app.models.user import User
 
 # User settlement table schema:
 
@@ -49,12 +47,12 @@ class UserSettlement(Base):
 
     notes: Mapped[str | None] = mapped_column(Text, default=None)
 
-    user: Mapped["User"] = relationship(
+    user: Mapped["User"] = relationship(                 # noqa: F821 # type: ignore
     "User",
     back_populates="user_settlements",
     )
 
-    settlement: Mapped["Settlements"] = relationship(
+    settlement: Mapped["Settlements"] = relationship(    # noqa: F821 # type: ignore
         "Settlements",
         back_populates="user_settlements",
     )

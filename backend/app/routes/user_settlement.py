@@ -1,13 +1,18 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, HTTPException, status
+from fastapi import APIRouter, Body, HTTPException, Path, status
 from sqlalchemy import select
 
 from app.core.database import SessionDependence
 from app.dependencies.auth import CurrentUserDependency
 from app.models.settlement import Settlements
 from app.models.user_settlement import UserSettlement
-from app.schemas.user_settlement import UserSettlementListItem, UserSettlementResponse, UserSettlementUnlock
+from app.schemas.user_settlement import (
+    UserSettlementListItem,
+    UserSettlementResponse,
+    UserSettlementUnlock,
+    UserSettlementUpdate
+)
 
 router = APIRouter(
     prefix='/my-settlements',
@@ -82,3 +87,30 @@ def get_settlements(user: CurrentUserDependency, session: SessionDependence):
         )
         for settlement, user_settlement in results
     ]
+
+
+@router.patch('/my-settlements/{settlement_id}', response_model=UserSettlementUpdate)
+def update_settlement(user: CurrentUserDependency,
+                      settlement_id: Annotated[int, Path()],
+                      settlement_updates: Annotated[UserSettlementUpdate, Body()],
+                      session: SessionDependence):
+
+    query = select(UserSettlement).where(
+        UserSettlement.user_id == user.user_id,
+        UserSettlement.settlement_id == settlement_id
+    )
+    user_settlement = session.scalar(query)
+
+    if not user_settlement:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='settlement not found in database'
+        )
+
+    update_data = settlement_updates.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(user_settlement, field, value)
+    session.commit()
+    session.refresh(user_settlement)
+
+    return user_settlement

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.schemas.settlement import SettlementsResponse
 
@@ -41,6 +41,22 @@ class UserSettlementDetail(BaseModel):
     settlement: SettlementsResponse
 
 
+# Response schema for returning after user POSTs an unlocked settlement
+class UserSettlementResponse(BaseModel):
+    user_settlement_id: int
+    settlement_id: int
+    people: int
+    food: int
+    water: int
+    power: int
+    defense: int
+    beds: int
+    happiness: int
+    notes: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class UserSettlementUpdate(BaseModel):
     people: int | None = Field(default=None, ge=0)
     food: int | None = Field(default=None, ge=0)
@@ -50,3 +66,4 @@ class UserSettlementUpdate(BaseModel):
     beds: int | None = Field(default=None, ge=0)
     happiness: int | None = Field(default=None, ge=0, le=100)
     notes: str | None = None
+
