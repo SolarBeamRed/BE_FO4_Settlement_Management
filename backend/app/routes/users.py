@@ -1,9 +1,11 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Body, HTTPException, Path
+from fastapi import APIRouter, Body, HTTPException, Path, status
+from sqlalchemy import select
 
 from app.core.database import SessionDependence
 from app.dependencies.auth import CurrentUserDependency, get_user_by_username
+from app.models.user import User
 from app.routes.auth import check_existing_user
 from app.schemas.user import UserProfileResponse, UserUpdate
 
@@ -22,7 +24,7 @@ def return_current_user(current_user: CurrentUserDependency):
 
 
 @router.patch('/me', response_model=UserProfileResponse)
-async def update_user_profile(
+def update_user_profile(
     update_data: Annotated[UserUpdate, Body()],
     current_user: CurrentUserDependency,
     session: SessionDependence
@@ -54,7 +56,20 @@ async def get_searched_user(
     return target_user
 
 
-@router.delete('/me', status_code=204)
-def delete_user(current_user: CurrentUserDependency, session: SessionDependence):
-    pass
+@router.delete('/me', status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user: CurrentUserDependency, session: SessionDependence):
+    query = select(User).where(
+        User.user_id == user.user_id
+    )
+    user: User | None = session.scalar(query)
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='user not present in database'
+        )
+
+    session.delete(user)
+    session.commit()
+
 # _____________________________________________________________________
