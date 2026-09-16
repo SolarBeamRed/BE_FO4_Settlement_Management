@@ -10,7 +10,6 @@ from app.models.user_settlement import UserSettlement
 from app.schemas.user_settlement import (
     UserSettlementListItem,
     UserSettlementResponse,
-    UserSettlementUnlock,
     UserSettlementUpdate
 )
 
@@ -22,9 +21,8 @@ router = APIRouter(
 
 # ____________________________     ROUTES    __________________________________
 
-@router.post('/', response_model=UserSettlementResponse)
-def post_settlement(user: CurrentUserDependency, body: Annotated[UserSettlementUnlock, Body], session: SessionDependence):
-    settlement_id = body.settlement_id
+@router.post('/{settlement_id}', response_model=UserSettlementResponse)
+def post_settlement(user: CurrentUserDependency, settlement_id: Annotated[int, Path()], session: SessionDependence):
 
     # Verifying if settlement_id is valid
     settlement = session.get(Settlements, settlement_id)
@@ -89,7 +87,7 @@ def get_settlements(user: CurrentUserDependency, session: SessionDependence):
     ]
 
 
-@router.patch('/my-settlements/{settlement_id}', response_model=UserSettlementUpdate)
+@router.patch('/{settlement_id}', response_model=UserSettlementUpdate)
 def update_settlement(user: CurrentUserDependency,
                       settlement_id: Annotated[int, Path()],
                       settlement_updates: Annotated[UserSettlementUpdate, Body()],
@@ -114,3 +112,24 @@ def update_settlement(user: CurrentUserDependency,
     session.refresh(user_settlement)
 
     return user_settlement
+
+
+@router.delete('/{settlement_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_user_settlement(
+    user: CurrentUserDependency,
+    settlement_id: Annotated[int, Path()],
+    session: SessionDependence):
+    query = select(UserSettlement).where(
+        UserSettlement.user_id == user.user_id,
+        UserSettlement.settlement_id == settlement_id
+    )
+    user_settlement = session.scalar(query)
+
+    if not user_settlement:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='cannot delete settlement: settlement not found in database'
+        )
+
+    session.delete(user_settlement)
+    session.commit()

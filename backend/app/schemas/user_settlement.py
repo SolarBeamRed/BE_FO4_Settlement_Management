@@ -3,11 +3,6 @@ from pydantic import BaseModel, ConfigDict, Field
 from app.schemas.settlement import SettlementsResponse
 
 
-# User settlement unlock schema for POST my-settlements/ 
-class UserSettlementUnlock(BaseModel):
-    settlement_id: int 
-
-
 # Response schema for tabular view of user settlements
 class UserSettlementListItem(BaseModel):
     settlement_id: int
