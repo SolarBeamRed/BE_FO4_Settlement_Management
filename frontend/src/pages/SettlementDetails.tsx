@@ -27,8 +27,102 @@ export default function SettlementDetails() {
 
   return (
     <main className="page">
-      <div className="detail-header"><div><span className="eyebrow">{item.addon} // {item.region ?? "Unknown region"}</span><h1>{item.name}</h1><p className="lead">Reference ID: {item.ref_id}</p></div><Link className="button secondary" to="/settlements">← CATALOGUE</Link></div>
-      <div className="detail-grid"><div className="panel">{item.map_image_url && <img className="map-image" src={item.map_image_url} alt={`Map of ${item.name}`} />}<h2>Field description</h2><p className="description">{item.description}</p><h2 className="section-title">How to obtain</h2><p className="description">{item.how_to_obtain}</p>{item.notes && <><h2 className="section-title">Notes</h2><p className="description">{item.notes}</p></>}{item.wiki_url && <p className="external-link"><a href={item.wiki_url} target="_blank" rel="noreferrer">OPEN EXTERNAL REFERENCE ↗</a></p>}</div><aside className="panel"><span className="eyebrow">On-site equipment</span><h2>Crafting stations</h2><div className="station-list">{stations.map(([key, label]) => <div className={`station-status ${item.crafting_stations[key] ? "available" : ""}`} key={key}><span>{label}</span><em>{item.crafting_stations[key] ? "AVAILABLE" : "UNAVAILABLE"}</em></div>)}</div></aside></div>
+      <div className="detail-header terminal-reveal terminal-reveal-delay-1">
+        <div>
+          <span className="eyebrow">
+            {item.addon} // {item.region ?? "Unknown region"}
+          </span>
+
+          <h1>{item.name}</h1>
+
+          <p className="lead">
+            Reference ID: {item.ref_id}
+          </p>
+        </div>
+
+        <Link
+          className="button secondary"
+          to="/settlements"
+        >
+          ← CATALOGUE
+        </Link>
+      </div>
+      <div className="detail-grid terminal-reveal terminal-reveal-delay-2">
+        <div className="panel">
+          {item.map_image_url && (
+            <img
+              className="map-image"
+              src={item.map_image_url}
+              alt={`Map of ${item.name}`}
+            />
+          )}
+
+          <h2>Field description</h2>
+
+          <p className="description">
+            {item.description}
+          </p>
+
+          <h2 className="section-title">
+            How to obtain
+          </h2>
+
+          <p className="description">
+            {item.how_to_obtain}
+          </p>
+
+          {item.notes && (
+            <>
+              <h2 className="section-title">
+                Notes
+              </h2>
+
+              <p className="description">
+                {item.notes}
+              </p>
+            </>
+          )}
+
+          {item.wiki_url && (
+            <p className="external-link">
+              <a
+                href={item.wiki_url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                OPEN EXTERNAL REFERENCE ↗
+              </a>
+            </p>
+          )}
+        </div>
+
+        <aside className="panel">
+          <span className="eyebrow">
+            On-site equipment
+          </span>
+
+          <h2>Crafting stations</h2>
+
+          <div className="station-list">
+            {stations.map(([key, label]) => (
+              <div
+                className={`station-status ${
+                  item.crafting_stations[key] ? "available" : ""
+                }`}
+                key={key}
+              >
+                <span>{label}</span>
+
+                <em>
+                  {item.crafting_stations[key]
+                    ? "AVAILABLE"
+                    : "UNAVAILABLE"}
+                </em>
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
     </main>
   );
 }

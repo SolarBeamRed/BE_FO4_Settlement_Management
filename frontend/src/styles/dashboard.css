@@ -1,0 +1,40 @@
+/* =========================================================
+   Home / Dashboard
+   ========================================================= */
+
+.stats-grid,
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.25rem;
+}
+
+.stat strong {
+  display: block;
+  font: 2.4rem "Share Tech Mono", monospace;
+  color: var(--accent);
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 2rem;
+}
+
+.feature-grid h2 {
+  margin-bottom: 0.5rem;
+}
+
+
+

@@ -230,7 +230,7 @@ export default function MySettlements() {
 
   return (
     <main className="page">
-      <div className="detail-header">
+      <div className="detail-header terminal-reveal terminal-reveal-delay-1">
         <div>
           <span className="eyebrow">Survivor terminal</span>
           <h1>My Settlements</h1>
@@ -248,7 +248,7 @@ export default function MySettlements() {
       {returnedMessage && <div className="notice">{returnedMessage}</div>}
       {error && <div className="notice error">{error}</div>}
 
-      <section className="toolbar my-settlements-toolbar">
+      <section className="toolbar my-settlements-toolbar terminal-reveal terminal-reveal-delay-2">
         <input
           type="text"
           placeholder="SEARCH SETTLEMENTS..."
@@ -335,7 +335,7 @@ export default function MySettlements() {
         )}
       </section>
 
-      <section className="my-settlements-list">
+      <section className="my-settlements-list terminal-reveal terminal-reveal-delay-3">
         {visibleItems.length === 0 ? (
           <div className="empty">
             {items.length === 0

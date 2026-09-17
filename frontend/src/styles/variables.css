@@ -1,0 +1,40 @@
+/* =========================================================
+   Theme
+   ========================================================= */
+
+:root {
+  --bg: #f1f2ec;
+  --surface: #fbfcf7;
+  --surface-alt: #e6e9e0;
+  --text: #17221a;
+  --muted: #536056;
+  --line: #bdc9bc;
+  --accent: #28743b;
+  --accent-bright: #4c9d54;
+  --accent-soft: #d9e9d8;
+  --danger: #ae3832;
+  --shadow: 0 16px 38px rgba(29, 45, 32, 0.1);
+
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+:root[data-theme="dark"] {
+  --bg: #101512;
+  --surface: #182019;
+  --surface-alt: #202b21;
+  --text: #e5eee1;
+  --muted: #a4b3a4;
+  --line: #3b4b3d;
+  --accent: #72d57d;
+  --accent-bright: #9af29b;
+  --accent-soft: #1e4427;
+  --danger: #ff8b82;
+  --shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+
+  color-scheme: dark;
+}
+
+
+

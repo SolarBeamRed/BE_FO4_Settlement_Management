@@ -250,7 +250,7 @@ export default function MySettlementDetails() {
 
   return (
     <main className="page">
-      <div className="detail-header">
+      <div className="detail-header terminal-reveal terminal-reveal-delay-1">
         <div>
           <span className="eyebrow">Personal settlement tracking</span>
           <h1>{settlement.name}</h1>
@@ -267,7 +267,7 @@ export default function MySettlementDetails() {
       {error && <div className="notice error">{error}</div>}
       {message && <div className="notice">{message}</div>}
 
-      <div className="detail-grid personal-detail-grid">
+      <div className="detail-grid personal-detail-grid terminal-reveal terminal-reveal-delay-2">
         <form className="panel" onSubmit={save}>
           <span className="eyebrow">Your live records</span>
           <h2>Tracking data</h2>

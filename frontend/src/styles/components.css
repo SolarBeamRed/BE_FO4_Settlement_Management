@@ -1,0 +1,210 @@
+/* =========================================================
+   General Components
+   ========================================================= */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.hero {
+  border: 1px solid var(--line);
+  background: linear-gradient(
+    125deg,
+    var(--surface),
+    var(--accent-soft)
+  );
+  padding: clamp(1.7rem, 5vw, 4.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "VAULT-TEC / SETTLEMENT INDEX";
+  position: absolute;
+  right: -0.4rem;
+  bottom: 0.6rem;
+  color: var(--accent);
+  opacity: 0.18;
+  font: 1rem "Share Tech Mono", monospace;
+  transform: rotate(-90deg);
+  transform-origin: right bottom;
+}
+
+.hero h1 {
+  max-width: 13ch;
+  margin: 0.45rem 0 1rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-top: 1.7rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.button:hover {
+  background: var(--accent-bright);
+  color: #112313;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.button.danger:hover {
+  filter: brightness(1.08);
+  color: #fff;
+}
+
+
+/* =========================================================
+   Forms
+   ========================================================= */
+
+.form-page {
+  max-width: 540px;
+}
+
+.form-card {
+  margin-top: 1.5rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-footer {
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.form-footer a,
+.external-link a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   Notices
+   ========================================================= */
+
+.notice {
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  margin: 1rem 0;
+}
+
+.notice.error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+
+/* =========================================================
+   Modal
+   ========================================================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.modal {
+  max-width: 560px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.modal p {
+  line-height: 1.55;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+
+/* =========================================================
+   Miscellaneous
+   ========================================================= */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  font: 0.75rem "Share Tech Mono", monospace;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.loading {
+  padding: 2rem;
+  color: var(--muted);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+
+

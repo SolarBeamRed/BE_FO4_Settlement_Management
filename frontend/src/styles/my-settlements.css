@@ -1,0 +1,219 @@
+/* =========================================================
+   My Settlements Toolbar
+   ========================================================= */
+
+.my-settlements-toolbar {
+  position: relative;
+  align-items: stretch;
+}
+
+.my-settlements-toolbar > input,
+.my-settlements-toolbar > select,
+.filter-dropdown {
+  min-height: 46px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   Region Multi-Select
+   ========================================================= */
+
+.region-filter {
+  position: relative;
+  min-width: 240px;
+}
+
+.filter-dropdown {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.filter-dropdown:hover,
+.filter-dropdown.open {
+  border-color: var(--accent);
+}
+
+.filter-arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.filter-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.filter-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.filter-option:last-child {
+  border-bottom: 0;
+}
+
+.filter-option:hover {
+  background: var(--accent-soft);
+}
+
+.filter-option.selected {
+  color: var(--accent);
+}
+
+.filter-checkbox {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  font-size: 0.75rem;
+}
+
+.filter-option.selected .filter-checkbox {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* =========================================================
+   My Settlements
+   ========================================================= */
+
+.my-settlements-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.my-settlement {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.my-settlement.locked {
+  background: var(--surface-alt);
+}
+
+.my-settlement-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.my-settlement h2 {
+  margin: 0 0 0.35rem;
+}
+
+/* =========================================================
+   Settlement Status & Tracking
+   ========================================================= */
+
+.status {
+  display: inline-block;
+  border: 1px solid var(--line);
+  padding: 0.2rem 0.45rem;
+  color: var(--muted);
+  font: 0.75rem "Share Tech Mono", monospace;
+}
+
+.status.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tracked-stats {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tracked-stats div {
+  background: var(--surface-alt);
+  padding: 0.6rem;
+}
+
+.tracked-stats strong {
+  display: block;
+  color: var(--accent);
+  font: 1.35rem "Share Tech Mono", monospace;
+}
+
+.tracked-stats span {
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.tracking-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 1rem;
+}
+
+.personal-summary {
+  margin-top: 1rem;
+}
+
+.personal-summary h2 {
+  margin: 0.4rem 0;
+}
+
+.personal-summary .button {
+  margin-top: 0.4rem;
+}
+
+/* =========================================================
+   Danger Zone
+   ========================================================= */
+
+.danger-zone {
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+}
+
+.danger-zone h2,
+.danger-zone h3 {
+  margin: 0.35rem 0;
+}
+
+
+

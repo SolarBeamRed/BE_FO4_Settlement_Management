@@ -1,0 +1,154 @@
+/* =========================================================
+   Catalogue Toolbar
+   ========================================================= */
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 0.7rem;
+  margin: 1.5rem 0;
+}
+
+.toolbar input,
+.toolbar select {
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 2px;
+}
+
+
+/* =========================================================
+   Settlement Catalogue
+   ========================================================= */
+
+.catalogue {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.settlement-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 1.8fr;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.settlement-row:last-child {
+  border: 0;
+}
+
+.settlement-row:hover {
+  background: var(--accent-soft);
+}
+
+.settlement-name {
+  font-weight: 700;
+}
+
+.stations-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
+.station-dot {
+  height: 0.55rem;
+  width: 0.55rem;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.station-dot.available {
+  background: var(--accent);
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid var(--line);
+  padding: 0.18rem 0.45rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+
+/* =========================================================
+   Settlement Details
+   ========================================================= */
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1.5rem;
+}
+
+.detail-header h1 {
+  margin: 0.45rem 0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.85fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.detail-grid .panel {
+  box-shadow: none;
+}
+
+.map-image {
+  width: 100%;
+  max-height: 310px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  margin-bottom: 1rem;
+}
+
+.description {
+  white-space: pre-line;
+  line-height: 1.65;
+}
+
+.section-title {
+  margin-top: 2rem;
+}
+
+.external-link {
+  margin-top: 2rem;
+}
+
+.station-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.station-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.7rem;
+  background: var(--surface-alt);
+  border-left: 3px solid var(--line);
+}
+
+.station-status.available {
+  border-color: var(--accent);
+}
+
+.station-status em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+
+

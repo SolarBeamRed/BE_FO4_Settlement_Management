@@ -1,0 +1,173 @@
+/* =========================================================
+   Layout
+   ========================================================= */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 4vw, 2rem);
+  flex: 1;
+}
+
+
+/* =========================================================
+   Header / Navigation
+   ========================================================= */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0.9rem clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1.12rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  height: 2rem;
+  width: 2rem;
+  color: var(--surface);
+  background: var(--accent);
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  margin-left: auto;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 0.45rem 0.7rem;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+
+.nav a.active,
+.nav a:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.theme-button,
+.icon-button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  padding: 0.43rem 0.6rem;
+  border-radius: 3px;
+}
+
+.mobile-toggle {
+  display: none;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+
+  .mobile-toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  .nav {
+    display: none;
+    order: 3;
+    width: 100%;
+    margin: 0;
+  }
+
+  .nav.open {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .header-actions {
+    margin-left: 0;
+  }
+
+  .stats-grid,
+  .feature-grid,
+  .profile-grid,
+  .detail-grid,
+  .tracking-form {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .my-settlements-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .region-filter {
+    min-width: 0;
+  }
+
+  .settlement-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+
+  .settlement-row > span:not(.settlement-name) {
+    font-size: 0.9rem;
+  }
+
+  .tracked-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer {
+    gap: 0.75rem;
+    flex-direction: column;
+  }
+
+  .detail-header {
+    flex-direction: column;
+  }
+
+  .page {
+    padding-bottom: 2rem;
+  }
+}
+

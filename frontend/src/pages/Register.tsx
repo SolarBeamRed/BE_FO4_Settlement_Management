@@ -28,9 +28,12 @@ export default function Register() {
 
   return (
     <main className="page form-page">
-      <span className="eyebrow">New survivor record</span><h1>Register</h1>
-      <p className="lead">Create a profile for the settlement network.</p>
-      <form className="panel form-card" onSubmit={submit}>
+      <div className="terminal-reveal terminal-reveal-delay-1">
+        <span className="eyebrow">New survivor record</span>
+        <h1>Register</h1>
+        <p className="lead">Create a profile for the settlement network.</p>
+      </div>
+      <form className="panel form-card terminal-reveal terminal-reveal-delay-2" onSubmit={submit}>
         {error && <div className="notice error">{error}</div>}
         <label className="field">Username<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" /></label>
         <label className="field">Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /></label>

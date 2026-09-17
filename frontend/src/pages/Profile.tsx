@@ -66,8 +66,11 @@ export default function Profile() {
   const initial = (user.display_name ?? user.username).slice(0, 1).toUpperCase();
   return (
     <main className="page">
-      <span className="eyebrow">Survivor terminal</span><h1>Profile</h1>
-      <div className="profile-grid">
+      <div className="terminal-reveal terminal-reveal-delay-1">
+        <span className="eyebrow">Survivor terminal</span>
+        <h1>Profile</h1>
+      </div>
+      <div className="profile-grid terminal-reveal terminal-reveal-delay-2">
         <aside className="panel profile-summary">
           {user.profile_picture_url ? <img className="avatar" src={user.profile_picture_url} alt="Profile" /> : <div className="avatar">{initial}</div>}
           <h2>{user.display_name ?? user.username}</h2>
