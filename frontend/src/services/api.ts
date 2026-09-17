@@ -1,4 +1,4 @@
-import type { Settlement, Token, UserProfile, UserResponse, UserUpdate } from "../types/api";
+import type { Settlement, Token, UserProfile, UserResponse, UserSettlementDetail, UserSettlementListItem, UserSettlementResponse, UserSettlementUpdate, UserUpdate } from "../types/api";
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "http://localhost:8000";
 export class ApiError extends Error {
@@ -20,6 +20,7 @@ async function request<T>(path: string, options: RequestInit = {}, token?: strin
     const detail = payload && typeof payload === "object" && "detail" in payload ? String(payload.detail) : `Request failed (${response.status})`;
     throw new ApiError(response.status, detail);
   }
+  if (response.status === 204) return undefined as T;
   return response.json() as Promise<T>;
 }
 
@@ -30,4 +31,10 @@ export const api = {
   getSettlement: (name: string) => request<Settlement>(`/settlements/${encodeURIComponent(name)}`),
   getMe: (token: string) => request<UserProfile>("/users/me", {}, token),
   updateMe: (data: UserUpdate, token: string) => request<UserProfile>("/users/me", { method: "PATCH", body: JSON.stringify(data) }, token),
+  deleteMe: (token: string) => request<void>("/users/me", { method: "DELETE" }, token),
+  getMySettlements: (token: string) => request<UserSettlementListItem[]>("/my-settlements/", {}, token),
+  unlockSettlement: (settlementId: number, token: string) => request<UserSettlementResponse>(`/my-settlements/${settlementId}`, { method: "POST" }, token),
+  getMySettlement: (settlementId: number, token: string) => request<UserSettlementDetail>(`/my-settlements/${settlementId}`, {}, token),
+  updateMySettlement: (settlementId: number, data: UserSettlementUpdate, token: string) => request<UserSettlementResponse>(`/my-settlements/${settlementId}`, { method: "PATCH", body: JSON.stringify(data) }, token),
+  deleteMySettlement: (settlementId: number, token: string) => request<void>(`/my-settlements/${settlementId}`, { method: "DELETE" }, token),
 };

@@ -10,7 +10,7 @@ from app.models.user_settlement import UserSettlement
 from app.schemas.user_settlement import (
     UserSettlementListItem,
     UserSettlementResponse,
-    UserSettlementUpdate
+    UserSettlementUpdate,
 )
 
 router = APIRouter(

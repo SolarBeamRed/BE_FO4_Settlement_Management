@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { api } from "../services/api";
-import type { Settlement } from "../types/api";
+import type { Settlement, UserSettlementListItem } from "../types/api";
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const [error, setError] = useState(false);
+  const [personal, setPersonal] = useState<UserSettlementListItem[] | null>(null);
 
   useEffect(() => {
     api.getSettlements().then(setSettlements).catch(() => setError(true));
   }, []);
+  useEffect(() => { if (token) api.getMySettlements(token).then(setPersonal).catch(() => setPersonal(null)); }, [token]);
 
   const regionCount = new Set(
     settlements.map((settlement) => settlement.region).filter(Boolean),
@@ -30,12 +32,14 @@ export default function Dashboard() {
         <div className="hero-actions">
           <Link className="button" to="/settlements">OPEN CATALOGUE</Link>
           {user ? (
-            <Link className="button secondary" to="/profile">VIEW PROFILE</Link>
+            <Link className="button secondary" to="/my-settlements">MY SETTLEMENTS</Link>
           ) : (
             <Link className="button secondary" to="/register">ENLIST NOW</Link>
           )}
         </div>
       </section>
+
+      {user && personal && <section className="personal-summary panel"><span className="eyebrow">Personal management</span><h2>Settlement status</h2><p className="muted"><strong>{personal.filter((item) => item.unlocked).length}</strong> unlocked // <strong>{personal.filter((item) => !item.unlocked).length}</strong> locked</p><Link className="button secondary" to="/my-settlements">MANAGE MY SETTLEMENTS</Link></section>}
 
       <section className="stats-grid">
         <div className="stat"><strong>{error ? "—" : settlements.length}</strong><span>catalogued settlements</span></div>
@@ -51,8 +55,8 @@ export default function Dashboard() {
         </article>
         <article className="panel">
           <span className="eyebrow">{user ? `Welcome, ${user.display_name ?? user.username}` : "Survivor access"}</span>
-          <h2>{user ? "Your profile is online." : "Sign in to keep your identity."}</h2>
-          <p className="muted">{user ? "Update your Commonwealth identity and favorite places from your profile terminal." : "Create an account to maintain a personal profile as the system grows."}</p>
+          <h2>{user ? "Your profile is online." : "Sign in to track your settlements."}</h2>
+          <p className="muted">{user ? "Manage your Commonwealth identity and personal settlement tracking from your survivor terminal." : "Create an account to unlock settlements and maintain your own resource records."}</p>
         </article>
       </section>
     </main>

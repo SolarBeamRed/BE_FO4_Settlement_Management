@@ -50,16 +50,15 @@ async def get_searched_user(
     target_user = get_user_by_username(target_username, session)
     if target_user is None:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail='User not found'
         )
-    return target_user
 
 
 @router.delete('/me', status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(user: CurrentUserDependency, session: SessionDependence):
+def delete_user(current_user: CurrentUserDependency, session: SessionDependence):
     query = select(User).where(
-        User.user_id == user.user_id
+        User.user_id == current_user.user_id
     )
     user: User | None = session.scalar(query)
 
