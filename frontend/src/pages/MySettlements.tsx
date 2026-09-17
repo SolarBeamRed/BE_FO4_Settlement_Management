@@ -181,6 +181,8 @@ export default function MySettlements() {
         token
       );
 
+      await new Promise((resolve) => window.setTimeout(resolve, 1500));
+
       setItems((current) =>
         current.map((record) =>
           record.settlement_id === item.settlement_id
@@ -189,15 +191,15 @@ export default function MySettlements() {
         )
       );
 
+      setUnlocking(null);
       setRecentlyUnlocked(item.settlement_id);
 
       window.setTimeout(() => {
         setRecentlyUnlocked((current) =>
           current === item.settlement_id ? null : current
         );
-      }, 1200);
-    }
-    catch (err) {
+      }, 1400);
+    } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         logout();
       } else {
@@ -207,7 +209,7 @@ export default function MySettlements() {
             : "Unable to unlock this settlement."
         );
       }
-    } finally {
+
       setUnlocking(null);
     }
   }
