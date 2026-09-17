@@ -39,6 +39,7 @@ export default function MySettlements() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [unlocking, setUnlocking] = useState<number | null>(null);
+  const [recentlyUnlocked, setRecentlyUnlocked] = useState<number | null>(null);
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("name");
@@ -187,7 +188,16 @@ export default function MySettlements() {
             : record
         )
       );
-    } catch (err) {
+
+      setRecentlyUnlocked(item.settlement_id);
+
+      window.setTimeout(() => {
+        setRecentlyUnlocked((current) =>
+          current === item.settlement_id ? null : current
+        );
+      }, 1200);
+    }
+    catch (err) {
       if (err instanceof ApiError && err.status === 401) {
         logout();
       } else {
@@ -333,7 +343,9 @@ export default function MySettlements() {
         ) : (
           visibleItems.map((item) => (
             <article
-              className={`my-settlement ${item.unlocked ? "" : "locked"}`}
+              className={`my-settlement ${item.unlocked ? "" : "locked"} ${
+                unlocking === item.settlement_id ? "unlocking" : ""
+              } ${recentlyUnlocked === item.settlement_id ? "recently-unlocked" : ""}`}
               key={item.settlement_id}
             >
               <div className="my-settlement-heading">

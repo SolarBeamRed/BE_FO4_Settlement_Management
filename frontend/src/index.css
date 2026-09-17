@@ -745,6 +745,116 @@ h2 {
   margin: 0 0 0.35rem;
 }
 
+/* =========================================================
+   Settlement Unlock Animation
+   ========================================================= */
+
+.my-settlement {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.my-settlement.unlocking {
+  border-color: var(--accent);
+  animation: settlement-unlocking 900ms ease-in-out infinite;
+}
+
+.my-settlement.unlocking::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -30%;
+  height: 30%;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--accent-soft),
+    transparent
+  );
+  animation: settlement-scan 900ms linear infinite;
+}
+
+.my-settlement.recently-unlocked {
+  animation: settlement-unlocked 1200ms ease-out;
+}
+
+@keyframes settlement-unlocking {
+  0%,
+  100% {
+    box-shadow: var(--shadow);
+  }
+
+  50% {
+    box-shadow:
+      var(--shadow),
+      0 0 0 1px var(--accent),
+      0 0 24px rgba(114, 213, 125, 0.18);
+  }
+}
+
+@keyframes settlement-scan {
+  0% {
+    transform: translateY(-120%);
+  }
+
+  100% {
+    transform: translateY(480%);
+  }
+}
+
+@keyframes settlement-unlocked {
+  0% {
+    border-color: var(--accent);
+    box-shadow:
+      var(--shadow),
+      0 0 0 1px var(--accent),
+      0 0 30px rgba(114, 213, 125, 0.3);
+  }
+
+  45% {
+    border-color: var(--accent-bright);
+    box-shadow:
+      var(--shadow),
+      0 0 0 1px var(--accent-bright),
+      0 0 38px rgba(114, 213, 125, 0.38);
+  }
+
+  100% {
+    border-color: var(--line);
+    box-shadow: var(--shadow);
+  }
+}
+
+.my-settlement.recently-unlocked .status.active {
+  animation: status-activation 1200ms ease-out;
+}
+
+@keyframes status-activation {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+    box-shadow: 0 0 0 0 rgba(114, 213, 125, 0.5);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 0 0 12px 2px rgba(114, 213, 125, 0.28);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
 .status {
   display: inline-block;
   border: 1px solid var(--line);
