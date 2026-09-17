@@ -230,6 +230,60 @@
   }
 }
 
+/* Terminal Boot */
+
+.terminal-boot-screen {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+}
+
+.terminal-sequence {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.terminal-line {
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent);
+  animation:
+    terminal-type 200ms steps(32, end) both,
+    terminal-cursor 400ms step-end infinite;
+}
+
+.terminal-line:nth-child(2) {
+  animation-delay: 350ms, 350ms;
+}
+
+.terminal-line:nth-child(3) {
+  animation-delay: 700ms, 700ms;
+}
+
+.terminal-line:nth-child(4) {
+  animation-delay: 1050ms, 1050ms;
+}
+
+@keyframes terminal-type {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes terminal-cursor {
+  50% {
+    border-color: transparent;
+  }
+}
+
+
 /* Login Verification */
 
 .verification-overlay {

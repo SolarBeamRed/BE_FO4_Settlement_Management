@@ -10,15 +10,47 @@ export default function Dashboard() {
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const [error, setError] = useState(false);
   const [personal, setPersonal] = useState<UserSettlementListItem[] | null>(null);
+  const [terminalBooting, setTerminalBooting] = useState(true);
 
   useEffect(() => {
     api.getSettlements().then(setSettlements).catch(() => setError(true));
   }, []);
   useEffect(() => { if (token) api.getMySettlements(token).then(setPersonal).catch(() => setPersonal(null)); }, [token]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setTerminalBooting(false);
+    }, 1400);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const regionCount = new Set(
     settlements.map((settlement) => settlement.region).filter(Boolean),
   ).size;
+
+  if (terminalBooting) {
+    return (
+      <main className="page terminal-boot-screen">
+        <div className="terminal-sequence">
+          <span className="terminal-line">
+            &gt; INITIALIZING SURVIVOR TERMINAL...
+          </span>
+
+          <span className="terminal-line">
+            &gt; DATABASE CONNECTION........OK
+          </span>
+
+          <span className="terminal-line">
+            &gt; SETTLEMENT NETWORK........OK
+          </span>
+
+          <span className="terminal-line">
+            &gt; USER PROFILE...............OK
+          </span>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="page">
