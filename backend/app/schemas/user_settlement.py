@@ -7,6 +7,8 @@ from app.schemas.settlement import SettlementsResponse
 class UserSettlementListItem(BaseModel):
     settlement_id: int
     name: str
+    region: str | None = None
+    addon: str
 
     unlocked: bool
 
