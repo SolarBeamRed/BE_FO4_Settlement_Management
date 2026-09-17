@@ -8,6 +8,7 @@ from app.dependencies.auth import CurrentUserDependency
 from app.models.settlement import Settlements
 from app.models.user_settlement import UserSettlement
 from app.schemas.user_settlement import (
+    UserSettlementDetail,
     UserSettlementListItem,
     UserSettlementResponse,
     UserSettlementUpdate,
@@ -74,6 +75,8 @@ def get_settlements(user: CurrentUserDependency, session: SessionDependence):
         UserSettlementListItem(
             settlement_id=settlement.settlement_id,
             name=settlement.name,
+            region=settlement.region,
+            addon=settlement.addon,
             unlocked=user_settlement is not None,
             people=user_settlement.people if user_settlement else None,
             food=user_settlement.food if user_settlement else None,
@@ -85,6 +88,27 @@ def get_settlements(user: CurrentUserDependency, session: SessionDependence):
         )
         for settlement, user_settlement in results
     ]
+
+
+@router.get('/{settlement_id}', response_model=UserSettlementDetail)
+def get_settlement_detailed(
+    user: CurrentUserDependency,
+    settlement_id: Annotated[int, Path()],
+    session: SessionDependence):
+
+    query = select(UserSettlement).where(
+        UserSettlement.user_id == user.user_id,
+        UserSettlement.settlement_id == settlement_id
+    )
+    user_settlement = session.scalar(query)
+
+    if not user_settlement:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f'user has not unlocked settlement with id {settlement_id}'
+        )
+
+    return user_settlement
 
 
 @router.patch('/{settlement_id}', response_model=UserSettlementUpdate)
