@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 
 import { ApiError, api } from "../services/api";
@@ -18,6 +18,17 @@ const tracked = [
   "happiness",
 ] as const;
 
+const regions = [
+  "Central Commonwealth",
+  "Eastern Commonwealth",
+  "Northeastern Commonwealth",
+  "Northern Commonwealth",
+  "Northwestern Commonwealth",
+  "Southeastern Commonwealth",
+  "Southern Commonwealth",
+  "Western Commonwealth",
+] as const;
+
 export default function MySettlements() {
   const { token, loading: authLoading, logout } = useAuth();
   const location = useLocation();
@@ -33,6 +44,10 @@ export default function MySettlements() {
   const [sortBy, setSortBy] = useState("name");
   const [sortDirection, setSortDirection] = useState("asc");
   const [statusFilter, setStatusFilter] = useState("unlocked");
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+  const [regionMenuOpen, setRegionMenuOpen] = useState(false);
+
+  const regionMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -63,6 +78,23 @@ export default function MySettlements() {
     void load();
   }, [token, logout]);
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        regionMenuRef.current &&
+        !regionMenuRef.current.contains(event.target as Node)
+      ) {
+        setRegionMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const visibleItems = useMemo(() => {
     const searchTerm = search.trim().toLowerCase();
 
@@ -74,6 +106,13 @@ export default function MySettlements() {
           item.region?.toLowerCase().includes(searchTerm) ||
           item.addon.toLowerCase().includes(searchTerm)
         )
+      ) {
+        return false;
+      }
+
+      if (
+        selectedRegions.length > 0 &&
+        (!item.region || !selectedRegions.includes(item.region))
       ) {
         return false;
       }
@@ -100,7 +139,34 @@ export default function MySettlements() {
 
       return sortDirection === "asc" ? comparison : -comparison;
     });
-  }, [items, search, sortBy, sortDirection, statusFilter]);
+  }, [
+    items,
+    search,
+    sortBy,
+    sortDirection,
+    statusFilter,
+    selectedRegions,
+  ]);
+
+  function toggleRegion(region: string) {
+    setSelectedRegions((current) =>
+      current.includes(region)
+        ? current.filter((selected) => selected !== region)
+        : [...current, region]
+    );
+  }
+
+  function getRegionLabel() {
+    if (selectedRegions.length === 0) {
+      return "ALL REGIONS";
+    }
+
+    if (selectedRegions.length === 1) {
+      return selectedRegions[0];
+    }
+
+    return `${selectedRegions.length} REGIONS SELECTED`;
+  }
 
   async function unlock(item: UserSettlementListItem) {
     if (!token) return;
@@ -170,13 +236,63 @@ export default function MySettlements() {
       {returnedMessage && <div className="notice">{returnedMessage}</div>}
       {error && <div className="notice error">{error}</div>}
 
-      <section className="settlement-controls">
+      <section className="toolbar my-settlements-toolbar">
         <input
           type="text"
           placeholder="SEARCH SETTLEMENTS..."
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
+
+        <div className="region-filter" ref={regionMenuRef}>
+          <button
+            type="button"
+            className={`filter-dropdown ${
+              regionMenuOpen ? "open" : ""
+            }`}
+            onClick={() => setRegionMenuOpen((current) => !current)}
+          >
+            <span>{getRegionLabel()}</span>
+            <span className="filter-arrow">⌄</span>
+          </button>
+
+          {regionMenuOpen && (
+            <div className="filter-menu">
+              <button
+                type="button"
+                className={`filter-option ${
+                  selectedRegions.length === 0 ? "selected" : ""
+                }`}
+                onClick={() => setSelectedRegions([])}
+              >
+                <span className="filter-checkbox">
+                  {selectedRegions.length === 0 ? "✓" : ""}
+                </span>
+                <span>ALL REGIONS</span>
+              </button>
+
+              {regions.map((region) => {
+                const selected = selectedRegions.includes(region);
+
+                return (
+                  <button
+                    type="button"
+                    className={`filter-option ${
+                      selected ? "selected" : ""
+                    }`}
+                    key={region}
+                    onClick={() => toggleRegion(region)}
+                  >
+                    <span className="filter-checkbox">
+                      {selected ? "✓" : ""}
+                    </span>
+                    <span>{region}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         <select
           value={sortBy}
@@ -223,11 +339,6 @@ export default function MySettlements() {
               <div className="my-settlement-heading">
                 <div>
                   <h2>{item.name}</h2>
-
-                  <div className="settlement-meta">
-                    {item.region && <span>{item.region}</span>}
-                    <span>{item.addon}</span>
-                  </div>
 
                   <span
                     className={`status ${item.unlocked ? "active" : ""}`}
