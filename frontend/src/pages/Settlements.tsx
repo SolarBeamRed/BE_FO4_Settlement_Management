@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { api } from "../services/api";
@@ -44,15 +44,21 @@ export default function Settlements() {
       </div>
       {
         loading ? (
-          <div className="loading">
-            LOADING SETTLEMENT RECORDS…
+          <div className="data-loading">
+            <span className="data-loading-text">
+              SCANNING SETTLEMENT DATABASE...
+              <span className="data-loading-cursor" />
+            </span>
           </div>
         ) : error ? (
           <div className="notice error">
             Unable to load the catalogue: {error}
           </div>
         ) : (
-          <section className="catalogue terminal-reveal terminal-reveal-delay-3">
+          <section
+            key={`${search}-${region}-${addon}-${station}`}
+            className="catalogue terminal-reveal terminal-reveal-delay-3 filter-transition"
+          >
             {filtered.length === 0 ? (
               <div className="empty">
                 No settlement records match these filters.
@@ -60,8 +66,13 @@ export default function Settlements() {
             ) : (
               filtered.map((item) => (
                 <Link
-                  className="settlement-row"
+                  className="settlement-row filter-result"
                   key={item.settlement_id}
+                  style={
+                    {
+                      "--filter-delay": `${filtered.indexOf(item) * 50}ms`,
+                    } as CSSProperties
+                  }
                   to={`/settlements/${encodeURIComponent(item.name)}`}
                 >
                   <span className="settlement-name">

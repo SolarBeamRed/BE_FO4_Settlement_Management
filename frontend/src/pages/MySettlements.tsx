@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 
 import { ApiError, api } from "../services/api";
@@ -221,8 +221,11 @@ export default function MySettlements() {
   if (authLoading || !token || loading) {
     return (
       <main className="page">
-        <div className="loading">
-          RETRIEVING PERSONAL SETTLEMENT RECORDS…
+        <div className="data-loading">
+          <span className="data-loading-text">
+            ACCESSING SETTLEMENT RECORDS...
+            <span className="data-loading-cursor" />
+          </span>
         </div>
       </main>
     );
@@ -347,8 +350,12 @@ export default function MySettlements() {
             <article
               className={`my-settlement ${item.unlocked ? "" : "locked"} ${
                 unlocking === item.settlement_id ? "unlocking" : ""
-              } ${recentlyUnlocked === item.settlement_id ? "recently-unlocked" : ""}`}
-              key={item.settlement_id}
+              } ${recentlyUnlocked === item.settlement_id ? "recently-unlocked" : ""} filter-result`}
+              style={
+                {
+                  "--filter-delay": `${visibleItems.indexOf(item) * 50}ms`,
+                } as CSSProperties
+              }
             >
               <div className="my-settlement-heading">
                 <div>

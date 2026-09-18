@@ -340,6 +340,69 @@
   }
 }
 
+/* Terminal-style data loading */
+.data-loading {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  color: var(--muted);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.data-loading::after {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--accent-soft),
+    transparent
+  );
+  animation: loading-scan 1.6s linear infinite;
+}
+
+.data-loading-text {
+  position: relative;
+  z-index: 1;
+}
+
+.data-loading-cursor {
+  display: inline-block;
+  width: 0.55rem;
+  height: 1rem;
+  margin-left: 0.3rem;
+  vertical-align: -0.15rem;
+  background: var(--accent);
+  animation: loading-cursor 0.8s steps(2, end) infinite;
+}
+
+@keyframes loading-scan {
+  0% {
+    top: -100%;
+  }
+
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes loading-cursor {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 
 /* Login Verification */
 
@@ -427,5 +490,40 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/*Filter search transition */
+.filter-transition {
+  animation: filter-result-in 180ms ease-out;
+}
+
+@keyframes filter-result-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered filter results */
+.filter-result {
+  animation: filter-result-in 220ms ease-out both;
+  animation-delay: var(--filter-delay, 0ms);
+}
+
+@keyframes filter-result-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
