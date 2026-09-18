@@ -37,7 +37,16 @@ export default function Register() {
         {error && <div className="notice error">{error}</div>}
         <label className="field">Username<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" /></label>
         <label className="field">Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /></label>
-        <button className="button" disabled={submitting}>{submitting ? "CREATING…" : "CREATE ACCOUNT"}</button>
+        <button className="button" disabled={submitting}>
+          {submitting ? (
+            <span className="button-loading">
+              CREATING
+              <span className="button-loading-indicator" aria-hidden="true" />
+            </span>
+          ) : (
+            "CREATE ACCOUNT"
+          )}
+        </button>
         <p className="form-footer">Already registered? <Link to="/login">Log in</Link></p>
       </form>
     </main>

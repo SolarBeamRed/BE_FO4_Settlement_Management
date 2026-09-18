@@ -374,9 +374,14 @@ export default function MySettlements() {
                     disabled={unlocking === item.settlement_id}
                     onClick={() => unlock(item)}
                   >
-                    {unlocking === item.settlement_id
-                      ? "UNLOCKING…"
-                      : "UNLOCK"}
+                    {unlocking === item.settlement_id ? (
+                      <span className="button-loading">
+                        UNLOCKING
+                        <span className="button-loading-indicator" aria-hidden="true" />
+                      </span>
+                    ) : (
+                      "UNLOCK"
+                    )}
                   </button>
                 )}
               </div>

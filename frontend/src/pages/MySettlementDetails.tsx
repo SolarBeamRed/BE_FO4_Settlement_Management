@@ -305,7 +305,14 @@ export default function MySettlementDetails() {
           </label>
 
           <button className="button" disabled={saving}>
-            {saving ? "SAVING…" : "SAVE CHANGES"}
+            {saving ? (
+              <span className="button-loading">
+                SAVING
+                <span className="button-loading-indicator" aria-hidden="true" />
+              </span>
+            ) : (
+              "SAVE CHANGES"
+            )}
           </button>
 
           <div className="danger-zone">

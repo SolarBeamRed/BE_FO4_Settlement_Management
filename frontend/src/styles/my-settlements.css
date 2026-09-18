@@ -146,16 +146,34 @@
    ========================================================= */
 
 .status {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   border: 1px solid var(--line);
   padding: 0.2rem 0.45rem;
   color: var(--muted);
   font: 0.75rem "Share Tech Mono", monospace;
 }
 
+.status::before {
+  content: "";
+  width: 0.35rem;
+  height: 0.35rem;
+  flex: 0 0 0.35rem;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: 0.55;
+}
+
 .status.active {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.status.active::before {
+  background: var(--accent);
+  opacity: 1;
+  animation: status-breathe 2.2s ease-in-out infinite;
 }
 
 .tracked-stats {

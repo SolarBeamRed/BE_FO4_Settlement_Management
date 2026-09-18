@@ -84,7 +84,16 @@ export default function Profile() {
           <label className="field">Bio<textarea value={form.bio ?? ""} onChange={(event) => change("bio", event.target.value)} /></label>
           <label className="field">Favorite settlement<input value={form.favorite_settlement ?? ""} onChange={(event) => change("favorite_settlement", event.target.value)} /></label>
           <label className="field">Favorite faction<input value={form.favorite_faction ?? ""} onChange={(event) => change("favorite_faction", event.target.value)} /></label>
-          <button className="button" disabled={saving}>{saving ? "SAVING…" : "SAVE PROFILE"}</button>
+          <button className="button" disabled={saving}>
+            {saving ? (
+              <span className="button-loading">
+                SAVING
+                <span className="button-loading-indicator" aria-hidden="true" />
+              </span>
+            ) : (
+              "SAVE PROFILE"
+            )}
+          </button>
           <section className="danger-zone">
             <span className="eyebrow">Danger zone</span><h2>Delete account</h2>
             <p className="muted">Permanently erase this survivor account and every personal settlement record.</p>

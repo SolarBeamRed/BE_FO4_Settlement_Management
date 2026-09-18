@@ -58,7 +58,16 @@ export default function Login() {
         {error && <div className="notice error">{error}</div>}
         <label className="field">Username<input value={username} onChange={(event) => setUsername(event.target.value)} autoComplete="username" /></label>
         <label className="field">Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" /></label>
-        <button className="button" disabled={submitting || loading}>{submitting ? "VERIFYING…" : "LOG IN"}</button>
+        <button className="button" disabled={submitting || loading}>
+          {submitting ? (
+            <span className="button-loading">
+              VERIFYING
+              <span className="button-loading-indicator" aria-hidden="true" />
+            </span>
+          ) : (
+            "LOG IN"
+          )}
+        </button>
         <p className="form-footer">New to the Commonwealth? <Link to="/register">Create an account</Link></p>
       </form>
       {verificationStage !== "idle" && (
